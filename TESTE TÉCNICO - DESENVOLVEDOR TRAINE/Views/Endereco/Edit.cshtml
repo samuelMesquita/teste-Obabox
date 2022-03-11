@@ -1,0 +1,115 @@
+﻿@using TESTE_TÉCNICO___DESENVOLVEDOR_TRAINE.Views.Cliente
+@model EnderecoViewModel
+@{
+}
+<style>
+        .container-div{
+            height: 80%;
+            width: 80%;
+            box-shadow: 0 0 1em rgb(119, 113, 113);
+            border-radius: 10px;
+        }
+        h3{
+            color:rgb(75, 71, 71)
+        }
+        span{
+            margin-bottom: 1rem;
+        }
+        input{
+            margin: 0 1rem 0 1rem;
+        }
+        form>.col-md-12{
+            height: 4rem;
+        }
+        button{
+            width: 8rem;
+        }
+</style>
+
+<div class="container-div mt-5 p-3">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>
+                    Criar Endereco
+                </h3>
+                <li class=" mt-5">
+                     Preencha os dados para a edição do cliente, salvando diretamente na base de dados.
+                </li>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 d-flex flex-column">
+                @using (Html.BeginForm("Edit", "Endereco", new{ id = Model.IdEndereco }, FormMethod.Post))
+                {
+                    <div class="col-md-12 d-flex">
+                        <div class="col-md-2 d-flex">
+                            <span>Tipo Residencia:</span>
+                        </div>
+                        <div class="col-md-4">
+                            <select asp-for="@Model.IdTipo" class="form-control" >
+                              <option value="1">Residencial</option>
+                              <option value="2">Comercial</option>
+                              <option value="3">Outros</option>
+                            </select>
+                        </div>
+                        <div class="col-md-1 d-flex">
+                            <span>CEP:</span>
+                        </div>
+                        <div class="col-md-4">
+                         <input asp-for="@Model.CEP" type="text" class="form-control" placeholder="Digite seu CEP..." required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 d-flex align-items-center">
+                        <div class="col-md-2">
+                            <span>Logradouro:</span>
+                        </div>
+                        <div class="col-md-4 pl-0 ml-0">
+                         <input asp-for="@Model.Logradouro" type="text" class="form-control" placeholder="Digite seu logradouro..." required>
+                        </div>
+                       
+                       <div class="col-md-1">
+                            <span>Número:</span>
+                        </div>
+                        <div class="col-md-4">
+                           <input asp-for="@Model.Numero" type="text" class="form-control" placeholder="Digite o número da sua casa..." required>
+                       </div>
+                    </div>
+
+                   <div class="col-md-12 d-flex align-items-center">
+                        <div class="col-md-2">
+                            <span>Complemento:</span>
+                        </div>
+                         <div class="col-md-4 pl-0 ml-0">
+                            <input asp-for="@Model.Complemento" type="text" class="form-control" placeholder="Digite o complemento...">
+                        </div>
+                  
+                       <div class="col-md-1">
+                            <span>Cidade:</span>
+                        </div>
+                        <div class="col-md-4">
+                             <input asp-for="@Model.Cidade" type="text" class="form-control" placeholder="Digite o endereço da sua cidade..." required>
+                        </div>
+                        
+                    </div>
+                    <div class="col-md-12 d-flex align-items-center">
+                         <div class="col-md-2">
+                            <span>UF:</span>
+                        </div>
+                        <div class="col-md-4 pl-0 ml-0">
+                             <input asp-for="@Model.UF" type="text" class="form-control" placeholder="Digite o UF..." required>
+                        </div>
+                    </div>
+                    <div class="col-md-12 d-flex align-items-center justify-content-end">
+                        <a class="btn btn-primary mr-3" asp-controller="Cliente" asp-action="Edit" asp-route-id="@Model.FkCliente" asp-route-idCliente="@Model.FkCliente">Voltar</a>
+                        <button type="submit" class="btn btn-warning">Editar</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+<script>
+    
+</script>

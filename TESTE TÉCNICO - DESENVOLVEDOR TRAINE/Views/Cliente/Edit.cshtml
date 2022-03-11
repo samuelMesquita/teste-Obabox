@@ -1,0 +1,181 @@
+﻿@model ClienteViewModel;
+@{
+}
+<style>
+        .container-div{
+            height: 80%;
+            width: 80%;
+            box-shadow: 0 0 1em rgb(119, 113, 113);
+            border-radius: 10px;
+        }
+        h3{
+            color:rgb(75, 71, 71)
+        }
+        span{
+            margin-bottom: 1rem;
+        }
+        input{
+            margin: 0 1rem 0 1rem;
+        }
+        input[type=date]{
+                width: 100%;
+                height: calc(1.5em + 0.75rem + 2px);
+                padding: 0.375rem 0.75rem;
+                font-size: 1rem;
+                font-weight: 400;
+                line-height: 1.5;
+                color: #495057;
+                background-color: #fff;
+                background-clip: padding-box;
+                border: 1px solid #ced4da;
+                border-radius: 0.25rem;
+                transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        }
+        form>.col-md-12{
+            height: 4rem;
+        }
+        button{
+            width: 8rem;
+        }
+        a{
+            color:white;
+        }
+</style>
+
+<div class="container-div mt-5 p-3">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>
+                    Editar Cliente
+                </h3>
+                <li class=" mt-5">
+                     Preencha os dados para a edição do cliente, salvando diretamente na base de dados.
+                </li>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 d-flex flex-column">
+                @using (Html.BeginForm("Edit", "Cliente", FormMethod.Post))
+                {
+                <div class="col-md-12 d-flex">
+                    <div class="col-md-2 d-flex">
+                        <span>Nome:</span>
+                    </div>
+                    <div class="col-md-5">
+                        <input type="text" asp-for="@Model.Nome" class="form-control" placeholder="Digite seu nome Completo..." required>
+                    </div>
+                    <div class="col-md-5">
+                    <select class="form-control" asp-for="@Model.Sexo" aria-label="Sexo">
+                      <option value="M">Masculino</option>
+                      <option value="F">Feminino</option>
+                      <option value="O">Outros</option>
+                    </select>
+                    </div>
+                </div>
+
+                <div class="col-md-12 d-flex align-items-center">
+                    <div class="col-md-2">
+                        <span>Data de Nacimento:</span>
+                    </div>
+                   <div class="col-md-4">
+                       <input asp-for="@Model.DataNascimento" type="date" required />
+                   </div>
+                   <div class="col-md-2">
+                        <span>Estado Civil:</span>
+                    </div>
+                    <div class="col-md-4 pl-0 ml-0">
+                      <select asp-for="@Model.EstadoCivil" class="form-control">
+                      <option value="1">Casado</option>
+                      <option value="2">Solteiro</option>
+                      <option value="3">Viuvo</option>
+                    </select>
+                   </div>
+                </div>
+
+                 <div class="col-md-12 d-flex align-items-center">
+                    <div class="col-md-2">
+                        <span>CPF:</span>
+                    </div>
+                    <div class="col-md-4">
+                         <input type="text" asp-for="@Model.CPF" class="form-control" placeholder="Digite seu CPF Completo..." required>
+                    </div>
+                  
+                   <div class="col-md-2">
+                        <span>RG:</span>
+                    </div>
+                    <div class="col-md-4 pl-0 ml-0">
+                         <input type="text" asp-for="@Model.RG" class="form-control ml-0" placeholder="Digite seu RG Completo..." required>
+                    </div>
+                </div>
+
+                <div class="row">
+                      <div class="d-table col-md-12 d-flex justify-content-center pt-3">
+                     <table class="table table-striped">
+                        <thead>
+                               
+                                <tr>
+                            <th> Tipo </th>
+                            <th> Lougradouro </th>
+                            <th> Numero </th>
+                            <th> Complemento </th>
+                            <th> Cidade </th>
+                            <th> Editar</th>
+                            <th> Excluir</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                             @foreach(var endereco in Model.ListaEndedreco)
+                                {
+                                  <tr>
+                                    <td>
+                                        @if(endereco.IdTipo == 1){
+                                            <span>Residencial</span>
+                                        }
+                                        @if(endereco.IdTipo == 2){
+                                            <span>Comercial</span>
+                                        }
+                                        else{
+                                            <span>Outros</span>
+                                        }
+                                       
+                                    </td>
+                                    <td>
+                                      @endereco.Logradouro
+                                    </td>
+                                    <td> 
+                                        @endereco.Numero
+                                    </td>
+                                    <td> 
+                                        @endereco.Complemento
+                                    </td>
+                                     <td> 
+                                        @endereco.Cidade
+                                    </td>
+                                    <td> 
+                                        <a class="btn btn-warning" asp-controller="Endereco" asp-action="Edit" asp-route-id="@endereco.IdEndereco" asp-action="Edit">Editar</a>
+                                    </td>
+                                    <td> 
+                                        <a class="btn btn-danger" asp-controller="Endereco" asp-action="delete" asp-route-id="@endereco.IdEndereco" asp-route-idCliente="@Model.IdCliente">Excluir</a>
+                                    </td>
+                                  </tr>
+                                }
+                          <tr>
+                              <td>
+                                  <a class="btn btn-success" asp-controller="Endereco" asp-action="Create" asp-route-id="@Model.IdCliente" style="color:white"> +Endereço</a>
+                              </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                </div>
+                </div>
+              
+
+                <div class="col-md-12 d-flex align-items-center justify-content-end">
+                    <a asp-controller="Cliente" style="width:128px;" asp-action="Index" class="btn btn-primary mr-3">Voltar</a>
+                    <button type="submit"  class="btn btn-warning">Editar</button>
+                </div>
+              }
+            </div>
+        </div>
+    </div>
